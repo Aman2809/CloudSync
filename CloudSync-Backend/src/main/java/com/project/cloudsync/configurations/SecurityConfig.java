@@ -115,7 +115,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("/user", true)
+//                        .defaultSuccessUrl("/api/user", true)
+                        .defaultSuccessUrl("http://localhost:5173", true)
                         .authorizationEndpoint(authorization ->
                                 authorization.authorizationRequestResolver(authorizationRequestResolver)) // ADD THIS LINE
                         .userInfoEndpoint(userInfo -> userInfo

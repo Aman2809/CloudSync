@@ -251,12 +251,12 @@ public class GoogleOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 user.setGoogleRefreshToken(refreshToken);
             }
 
-            // Provider logic
-            if (user.getProvider() != null && user.getProvider().contains("DROPBOX")) {
-                user.setProvider("BOTH");
-            } else {
-                user.setProvider("GOOGLE");
-            }
+//            // Provider logic
+//            if (user.getProvider() != null && user.getProvider().contains("DROPBOX")) {
+//                user.setProvider("BOTH");
+//            } else {
+//                user.setProvider("GOOGLE");
+//            }
 
             userRepository.save(user);
             System.out.println("✅ Refresh token updated for user: " + email);

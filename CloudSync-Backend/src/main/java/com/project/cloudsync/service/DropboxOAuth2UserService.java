@@ -271,12 +271,12 @@ public class DropboxOAuth2UserService implements OAuth2UserService<OAuth2UserReq
                 user.setDropboxRefreshToken(refreshToken);
             }
 
-            // Provider logic
-            if (user.getProvider() != null && user.getProvider().contains("GOOGLE")) {
-                user.setProvider("BOTH");
-            } else {
-                user.setProvider("DROPBOX");
-            }
+//            // Provider logic
+//            if (user.getProvider() != null && user.getProvider().contains("GOOGLE")) {
+//                user.setProvider("BOTH");
+//            } else {
+//                user.setProvider("DROPBOX");
+//            }
 
             userRepository.save(user);
             System.out.println("✅ Dropbox refresh token updated for user: " + email);

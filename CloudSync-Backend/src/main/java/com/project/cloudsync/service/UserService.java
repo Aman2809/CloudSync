@@ -1,9 +1,14 @@
 package com.project.cloudsync.service;
 
+import com.project.cloudsync.dtos.ProviderResponse;
+import com.project.cloudsync.dtos.UserDto;
 import com.project.cloudsync.entities.User;
 import com.project.cloudsync.repositories.UserRepository;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -70,4 +75,35 @@ public class UserService {
         user.setLastSyncedAt(java.time.LocalDateTime.now());
         userRepository.save(user);
     }
+
+
+
+    // For /user endpoint
+    public UserDto getCurrentUser(OAuth2User oAuth2User) {
+        String email = oAuth2User.getAttribute("email");
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found: " + email));
+
+        return new UserDto(user.getId(), user.getEmail(), user.getName());
+    }
+
+
+    public ProviderResponse getConnectedProviders(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<String> providers = new ArrayList<>();
+
+        if (user.getGoogleAccessToken() != null) {
+            providers.add("GOOGLE");
+        }
+        if (user.getDropboxAccessToken() != null) {
+            providers.add("DROPBOX");
+        }
+
+        return new ProviderResponse(providers);
+    }
+
+
 }
